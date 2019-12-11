@@ -1,6 +1,9 @@
 import React from "react";
+import nearestColor from "nearest-color";
 
-const ImagePixels = ({ pixels, width, height }) => {
+const ImagePixels = ({ pixels, palette, width, height }) => {
+  const matchColor = palette ? nearestColor.from(palette) : null;
+
   return (
     <div
       style={{
@@ -30,12 +33,16 @@ const ImagePixels = ({ pixels, width, height }) => {
                   />
                 );
               } else {
+                const color = palette
+                  ? matchColor(`#${p.hex}`).value
+                  : `#${p.hex}`;
+
                 return (
                   <div
                     key={j}
                     className="inline-block"
                     style={{
-                      backgroundColor: `#${p.hex}`,
+                      backgroundColor: color,
                       width: "9.826px",
                       height: "9.826px"
                     }}
