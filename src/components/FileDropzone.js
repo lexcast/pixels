@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { loadImage, getPixels } from "utils";
 
-const FileDropzone = ({ images, setImages }) => {
+const FileDropzone = ({ setImages }) => {
   const onDrop = useCallback(
     acceptedFiles => {
       acceptedFiles.forEach(file => {
@@ -22,13 +22,15 @@ const FileDropzone = ({ images, setImages }) => {
             pixels: getPixels(img)
           };
 
-          setImages({ ...images, [file.name]: newImage });
+          setImages(oldImages => {
+            return { ...oldImages, [file.name]: newImage };
+          });
         };
 
         reader.readAsDataURL(file);
       });
     },
-    [images, setImages]
+    [setImages]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
