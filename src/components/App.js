@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FileDropzone from "./FileDropzone";
 import ImagePixels from "./ImagePixels";
 import defaultPalettes from "data/palettes";
+import nearestColor from "nearest-color";
 
 const App = () => {
   const [images, setImages] = useState({});
@@ -10,6 +11,43 @@ const App = () => {
   const generatePalette = () => {
     Object.keys(images).map(key => {});
   };
+
+  const colorsImage = {};
+  const colorsGlobal = {};
+  if (selectedPalette) {
+    const matchColor = nearestColor.from(palettes[selectedPalette]);
+
+    Object.keys(images).map(key => {
+      const img = images[key];
+      colorsImage[key] = { count: {}, map: {} };
+
+      img.pixels.flat().forEach(p => {
+        if (!p) {
+          return;
+        }
+
+        let newP;
+        if (!colorsImage[key].map[p.hex]) {
+          newP = matchColor(p.hex).value;
+          colorsImage[key].map[p.hex] = newP;
+        } else {
+          newP = colorsImage[key].map[p.hex];
+        }
+
+        if (!colorsImage[key].count[newP]) {
+          colorsImage[key].count[newP] = 1;
+        } else {
+          colorsImage[key].count[newP]++;
+        }
+
+        if (!colorsGlobal[newP]) {
+          colorsGlobal[newP] = 1;
+        } else {
+          colorsGlobal[newP]++;
+        }
+      });
+    });
+  }
 
   return (
     <div className="w-screen h-screen font-sans bg-gray-100 text-gray-700">
@@ -71,7 +109,7 @@ const App = () => {
               />
               <ImagePixels
                 pixels={images[key].pixels}
-                palette={palettes[selectedPalette]}
+                palette={selectedPalette ? colorsImage[key].map : null}
                 width={images[key].width}
                 height={images[key].height}
               />

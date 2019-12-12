@@ -1,9 +1,6 @@
 import React from "react";
-import nearestColor from "nearest-color";
 
 const ImagePixels = ({ pixels, palette, width, height }) => {
-  const matchColor = palette ? nearestColor.from(palette) : null;
-
   return (
     <div
       style={{
@@ -33,9 +30,7 @@ const ImagePixels = ({ pixels, palette, width, height }) => {
                   />
                 );
               } else {
-                const color = palette
-                  ? matchColor(`#${p.hex}`).value
-                  : `#${p.hex}`;
+                const color = palette ? palette[p.hex] : p.hex;
 
                 return (
                   <div

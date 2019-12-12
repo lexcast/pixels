@@ -29,7 +29,7 @@ const getPixels = img => {
 };
 
 const rgbToHex = (r, g, b) => {
-  return r.toString(16) + g.toString(16) + b.toString(16);
+  return "#" + r.toString(16) + g.toString(16) + b.toString(16);
 };
 
 const loadImage = async url => {
