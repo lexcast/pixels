@@ -29,7 +29,12 @@ const getPixels = img => {
 };
 
 const rgbToHex = (r, g, b) => {
-  return "#" + r.toString(16) + g.toString(16) + b.toString(16);
+  return (
+    "#" +
+    r.toString(16).padStart(2, "0") +
+    g.toString(16).padStart(2, "0") +
+    b.toString(16).padStart(2, "0")
+  );
 };
 
 const loadImage = async url => {
@@ -45,4 +50,4 @@ const loadImage = async url => {
   return await load(url);
 };
 
-export { getPixels, loadImage };
+export { getPixels, loadImage, rgbToHex };

@@ -3,13 +3,33 @@ import FileDropzone from "./FileDropzone";
 import ImagePixels from "./ImagePixels";
 import defaultPalettes from "data/palettes";
 import nearestColor from "nearest-color";
+import RgbQuant from "rgbquant";
+import { rgbToHex } from "utils";
 
 const App = () => {
   const [images, setImages] = useState({});
   const [palettes, setPalettes] = useState(defaultPalettes);
   const [selectedPalette, setSelectedPalette] = useState(null);
   const generatePalette = () => {
-    Object.keys(images).map(key => {});
+    const limit = prompt("Set palette limit", 32);
+
+    if (limit) {
+      const q = new RgbQuant({ colors: limit, method: 1 });
+
+      Object.keys(images).map(key => {
+        q.sample(images[key].image);
+      });
+
+      const newPalette = {};
+      q.palette(true).forEach(c => {
+        const hex = rgbToHex(c[0], c[1], c[2]);
+        newPalette[hex] = hex;
+      });
+
+      setPalettes(oldPalettes => {
+        return { ...oldPalettes, [+new Date()]: newPalette };
+      });
+    }
   };
 
   const colorsImage = {};

@@ -18,6 +18,7 @@ const FileDropzone = ({ setImages }) => {
             name: file.name,
             width: img.width,
             height: img.height,
+            image: img,
             url,
             pixels: getPixels(img)
           };
