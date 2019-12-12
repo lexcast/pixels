@@ -14,12 +14,13 @@ const App = () => {
 
   const colorsImage = {};
   const colorsGlobal = {};
+  let globalCount = 0;
   if (selectedPalette) {
     const matchColor = nearestColor.from(palettes[selectedPalette]);
 
     Object.keys(images).map(key => {
       const img = images[key];
-      colorsImage[key] = { count: {}, map: {} };
+      colorsImage[key] = { total: 0, count: {}, map: {} };
 
       img.pixels.flat().forEach(p => {
         if (!p) {
@@ -45,6 +46,9 @@ const App = () => {
         } else {
           colorsGlobal[newP]++;
         }
+
+        colorsImage[key].total++;
+        globalCount++;
       });
     });
   }
@@ -93,12 +97,31 @@ const App = () => {
           );
         })}
       </div>
+      {selectedPalette && (
+        <div className="flex flex-wrap items-center justify-center">
+          {globalCount}
+          {Object.keys(colorsGlobal).map(c => {
+            return (
+              <div
+                key={c}
+                className="inline-flex items-center justify-center w-10 h-10"
+                style={{
+                  backgroundColor: c
+                }}
+              >
+                <span className="bg-white text-gray-700 text-xs">
+                  {colorsGlobal[c]}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div className="py-6">
         {Object.keys(images).map(key => {
           return (
             <div key={key} className="p-3 flex">
               <img
-                className="mr-6"
                 src={images[key].url}
                 alt={key}
                 style={{
@@ -113,6 +136,26 @@ const App = () => {
                 width={images[key].width}
                 height={images[key].height}
               />
+              {selectedPalette && (
+                <div className="flex flex-wrap items-center justify-center">
+                  {colorsImage[key].total}
+                  {Object.keys(colorsImage[key].count).map(c => {
+                    return (
+                      <div
+                        key={c}
+                        className="inline-flex items-center justify-center w-10 h-10"
+                        style={{
+                          backgroundColor: c
+                        }}
+                      >
+                        <span className="bg-white text-gray-700 text-xs">
+                          {colorsImage[key].count[c]}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
