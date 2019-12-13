@@ -6,6 +6,8 @@ import nearestColor from "nearest-color";
 import RgbQuant from "rgbquant";
 import { rgbToHex } from "utils";
 
+const PRICE = 0.01965;
+
 const App = () => {
   const [images, setImages] = useState({});
   const [palettes, setPalettes] = useState(defaultPalettes);
@@ -119,7 +121,7 @@ const App = () => {
       </div>
       {selectedPalette && (
         <div className="flex flex-wrap items-center justify-center">
-          {globalCount}
+          {globalCount}${globalCount * PRICE}
           {Object.keys(colorsGlobal).map(c => {
             return (
               <div
@@ -158,7 +160,7 @@ const App = () => {
               />
               {selectedPalette && (
                 <div className="flex flex-wrap items-center justify-center">
-                  {colorsImage[key].total}
+                  {colorsImage[key].total}${colorsImage[key].total * PRICE}
                   {Object.keys(colorsImage[key].count).map(c => {
                     return (
                       <div
