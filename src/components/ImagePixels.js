@@ -1,22 +1,16 @@
 import React from "react";
 
-const ImagePixels = ({ pixels, palette, width, height }) => {
+const ImagePixels = ({ pixels, palette, width, height, size }) => {
   return (
     <div
       style={{
-        width: width * 9.826 + "px",
-        height: height * 9.826 + "px"
+        width: width * size + "px",
+        height: height * size + "px"
       }}
     >
       {pixels.map((r, i) => {
         return (
-          <div
-            className="flex"
-            key={i}
-            style={{
-              height: "9.826px"
-            }}
-          >
+          <div className="flex" key={i} style={{ height: size + "px" }}>
             {r.map((p, j) => {
               if (!p) {
                 return (
@@ -24,8 +18,8 @@ const ImagePixels = ({ pixels, palette, width, height }) => {
                     key={j}
                     className="inline-block bg-transparent"
                     style={{
-                      width: "9.826px",
-                      height: "9.826px"
+                      width: size + "px",
+                      height: size + "px"
                     }}
                   />
                 );
@@ -38,8 +32,8 @@ const ImagePixels = ({ pixels, palette, width, height }) => {
                     className="inline-block"
                     style={{
                       backgroundColor: color,
-                      width: "9.826px",
-                      height: "9.826px"
+                      width: size + "px",
+                      height: size + "px"
                     }}
                   />
                 );

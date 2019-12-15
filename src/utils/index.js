@@ -1,3 +1,5 @@
+const PIXEL_SIZE = 9.826;
+
 const getPixels = img => {
   const w = img.width;
   const h = img.height;
@@ -50,4 +52,4 @@ const loadImage = async url => {
   return await load(url);
 };
 
-export { getPixels, loadImage, rgbToHex };
+export { getPixels, loadImage, rgbToHex, PIXEL_SIZE };

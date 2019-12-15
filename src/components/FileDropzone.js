@@ -36,7 +36,7 @@ const FileDropzone = ({ setImages }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className="w-full h-full">
+    <div {...getRootProps()} className="flex items-center justify-center p-6 w-1/2 mx-2 cursor-pointer text-center hover:bg-gray-800 rounded-lg border-2 border-dashed border-gray-500">
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
