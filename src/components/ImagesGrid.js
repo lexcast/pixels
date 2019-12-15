@@ -61,7 +61,7 @@ const ImagesGrid = ({
   };
 
   return (
-    <div className="p-3 flex w-1/2 m-auto flex-col items-center">
+    <div className="p-3 flex w-3/4 m-auto flex-col items-center">
       <div className="flex w-full p-2 text-xs uppercase text-gray-500 bg-gray-800 rounded-t opacity-50">
         <div className="w-20 flex items-center justify-center">Original</div>
         <div className="w-20 flex items-center justify-center">Result</div>

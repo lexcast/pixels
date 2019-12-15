@@ -81,7 +81,7 @@ const App = () => {
       )}
       {selectedImage && (
         <ImageDetail
-          key={selectedImage}
+          id={selectedImage}
           image={images[selectedImage]}
           colors={colorsImage[selectedImage]}
           {...{ selectedPalette, setSelectedImage, PRICE }}

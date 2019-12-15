@@ -4,7 +4,7 @@ import PaletteCounter from "./PaletteCounter";
 import { PIXEL_SIZE } from "utils";
 
 const ImageDetail = ({
-  key,
+  id,
   image,
   colors,
   selectedPalette,
@@ -17,12 +17,12 @@ const ImageDetail = ({
         onClick={() => setSelectedImage(null)}
         className="bg-gray-900 opacity-50 w-full h-full fixed z-20 top-0 left-0"
       ></div>
-      <div className="w-full h-full pointer-events-none fixed z-30 top-0 left-0 flex items-center justify-center">
-        <div className="flex flex-col pointer-events-auto bg-gray-700 rounded shadow-lg">
-          <div className="flex items-center justify-between p-3">
+      <div className="w-full h-full px-24 py-10 pointer-events-none fixed z-30 top-0 left-0 flex items-center justify-center">
+        <div className="flex flex-col max-h-full max-w-full p-3 overflow-auto pointer-events-auto bg-gray-700 rounded shadow-lg">
+          <div className="flex flex-wrap items-center justify-center p-3">
             <img
               src={image.url}
-              alt={key}
+              alt={id}
               style={{
                 imageRendering: "pixelated",
                 width: image.width * PIXEL_SIZE + "px",
