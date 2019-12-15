@@ -50,7 +50,7 @@ const ImagesGrid = ({ images, selectedPalette, colorsImage, PRICE }) => {
                 <div className="w-20 flex items-center justify-end text-sm">
                   ${(colorsImage[key].total * PRICE).toFixed(2)}
                 </div>
-                <div className="flex-1 flex flex-wrap items-center justify-center">
+                <div className="flex-1 flex flex-wrap items-center justify-center px-2">
                   <PalettePixels palette={colorsImage[key].count} useKey />
                 </div>
               </>
