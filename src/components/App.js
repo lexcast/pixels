@@ -20,7 +20,7 @@ const App = () => {
   if (selectedPalette) {
     const matchColor = nearestColor.from(palettes[selectedPalette]);
 
-    Object.keys(images).map(key => {
+    Object.keys(images).forEach(key => {
       const img = images[key];
       colorsImage[key] = { total: 0, count: {}, map: {} };
 

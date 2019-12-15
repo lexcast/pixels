@@ -10,7 +10,7 @@ const PaletteGenerate = ({ images, setPalettes }) => {
     if (limit && title) {
       const q = new RgbQuant({ colors: limit, method: 1 });
 
-      Object.keys(images).map(key => {
+      Object.keys(images).forEach(key => {
         q.sample(images[key].image);
       });
 
