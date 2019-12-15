@@ -1,6 +1,6 @@
 import React from "react";
 
-const PaletteCounter = ({ palette, attr }) => {
+const PaletteCounter = ({ palette }) => {
   return (
     <div className="p-3 flex flex-wrap items-center justify-center">
       {Object.keys(palette).map(c => {
@@ -12,7 +12,7 @@ const PaletteCounter = ({ palette, attr }) => {
             style={{ backgroundColor: c }}
           >
             <span className="absolute px-1 bottom-0 right-0 bg-white text-gray-700 text-xs opacity-25">
-              {attr ? palette[c][attr] : palette[c]}
+              {palette[c]}
             </span>
           </div>
         );

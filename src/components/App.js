@@ -4,6 +4,7 @@ import PaletteGenerate from "./PaletteGenerate";
 import PaletteSelector from "./PaletteSelector";
 import GlobalCounter from "./GlobalCounter";
 import ImagesGrid from "./ImagesGrid";
+import ImageDetail from "./ImageDetail";
 import defaultPalettes from "data/palettes";
 import nearestColor from "nearest-color";
 
@@ -13,6 +14,7 @@ const App = () => {
   const [images, setImages] = useState({});
   const [palettes, setPalettes] = useState(defaultPalettes);
   const [selectedPalette, setSelectedPalette] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const colorsImage = {};
   const colorsGlobal = {};
@@ -73,7 +75,17 @@ const App = () => {
         />
       )}
       {Object.keys(images).length > 0 && (
-        <ImagesGrid {...{ images, selectedPalette, colorsImage, PRICE }} />
+        <ImagesGrid
+          {...{ images, selectedPalette, colorsImage, PRICE, setSelectedImage }}
+        />
+      )}
+      {selectedImage && (
+        <ImageDetail
+          key={selectedImage}
+          image={images[selectedImage]}
+          colors={colorsImage[selectedImage]}
+          {...{ selectedPalette, setSelectedImage, PRICE }}
+        />
       )}
     </div>
   );

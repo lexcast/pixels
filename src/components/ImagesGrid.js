@@ -3,7 +3,13 @@ import ImagePixels from "./ImagePixels";
 import PalettePixels from "./PalettePixels";
 import { List, AutoSizer } from "react-virtualized";
 
-const ImagesGrid = ({ images, selectedPalette, colorsImage, PRICE }) => {
+const ImagesGrid = ({
+  images,
+  selectedPalette,
+  colorsImage,
+  PRICE,
+  setSelectedImage
+}) => {
   const list = Object.keys(images);
 
   const imageRenderer = ({ key, index, style }) => {
@@ -14,6 +20,7 @@ const ImagesGrid = ({ images, selectedPalette, colorsImage, PRICE }) => {
       <div
         key={key}
         style={style}
+        onClick={() => setSelectedImage(id)}
         className="flex w-1/2 p-2 cursor-pointer hover:bg-gray-800"
       >
         <div className="w-20 flex items-center justify-center">
