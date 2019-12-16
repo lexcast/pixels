@@ -7,6 +7,7 @@ const ImageDetail = ({
   id,
   image,
   colors,
+  palette,
   selectedPalette,
   setSelectedImage,
   PRICE
@@ -31,10 +32,12 @@ const ImageDetail = ({
             />
             <ImagePixels
               pixels={image.pixels}
-              palette={selectedPalette ? colors.map : null}
+              map={selectedPalette ? colors.map : null}
+              palette={palette}
               width={image.width}
               height={image.height}
               size={PIXEL_SIZE}
+              titled
             />
           </div>
           {selectedPalette && (

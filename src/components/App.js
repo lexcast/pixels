@@ -31,24 +31,26 @@ const App = () => {
           return;
         }
 
+        let matched;
         let newP;
         if (!colorsImage[key].map[p.hex]) {
-          newP = matchColor(p.hex).value;
-          colorsImage[key].map[p.hex] = newP;
+          matched = matchColor(p.hex);
+          newP = matched.value;
+          colorsImage[key].map[p.hex] = matched.name;
         } else {
-          newP = colorsImage[key].map[p.hex];
+          newP = palettes[selectedPalette][colorsImage[key].map[p.hex]];
         }
 
         if (!colorsImage[key].count[newP]) {
-          colorsImage[key].count[newP] = 1;
+          colorsImage[key].count[newP] = { id: matched.name, count: 1 };
         } else {
-          colorsImage[key].count[newP]++;
+          colorsImage[key].count[newP].count++;
         }
 
         if (!colorsGlobal[newP]) {
-          colorsGlobal[newP] = 1;
+          colorsGlobal[newP] = { id: matched.name, count: 1 };
         } else {
-          colorsGlobal[newP]++;
+          colorsGlobal[newP].count++;
         }
 
         colorsImage[key].total++;
@@ -76,6 +78,7 @@ const App = () => {
       )}
       {Object.keys(images).length > 0 && (
         <ImagesGrid
+          palette={palettes[selectedPalette]}
           {...{ images, selectedPalette, colorsImage, PRICE, setSelectedImage }}
         />
       )}
@@ -84,6 +87,7 @@ const App = () => {
           id={selectedImage}
           image={images[selectedImage]}
           colors={colorsImage[selectedImage]}
+          palette={palettes[selectedPalette]}
           {...{ selectedPalette, setSelectedImage, PRICE }}
         />
       )}

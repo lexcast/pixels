@@ -5,6 +5,7 @@ import { List, AutoSizer } from "react-virtualized";
 
 const ImagesGrid = ({
   images,
+  palette,
   selectedPalette,
   colorsImage,
   PRICE,
@@ -37,7 +38,8 @@ const ImagesGrid = ({
         <div className="w-20 flex items-center justify-center">
           <ImagePixels
             pixels={image.pixels}
-            palette={selectedPalette ? colorsImage[id].map : null}
+            palette={palette}
+            map={selectedPalette ? colorsImage[id].map : null}
             width={image.width}
             height={image.height}
             size={1}

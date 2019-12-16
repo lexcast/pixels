@@ -7,12 +7,12 @@ const PaletteCounter = ({ palette }) => {
         return (
           <div
             key={c}
-            title={c}
+            title={palette[c].id}
             className="relative inline-flex items-center justify-center w-10 h-10"
             style={{ backgroundColor: c }}
           >
             <span className="absolute px-1 bottom-0 right-0 bg-white text-gray-700 text-xs opacity-25">
-              {palette[c]}
+              {palette[c].count}
             </span>
           </div>
         );
