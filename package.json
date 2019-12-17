@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "^9.7.3",
+    "delta-e": "^0.0.7",
     "nearest-color": "^0.4.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

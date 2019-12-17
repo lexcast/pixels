@@ -6,7 +6,7 @@ import GlobalCounter from "./GlobalCounter";
 import ImagesGrid from "./ImagesGrid";
 import ImageDetail from "./ImageDetail";
 import defaultPalettes from "data/palettes";
-import nearestColor from "nearest-color";
+import closerColor, { algorithms } from "utils/closerColor";
 
 const PRICE = 0.01965;
 
@@ -20,7 +20,7 @@ const App = () => {
   const colorsGlobal = {};
   let globalCount = 0;
   if (selectedPalette) {
-    const matchColor = nearestColor.from(palettes[selectedPalette]);
+    closerColor.from(palettes[selectedPalette], algorithms.DELTA_E94);
 
     Object.keys(images).forEach(key => {
       const img = images[key];
@@ -34,7 +34,7 @@ const App = () => {
         let matched;
         let newP;
         if (!colorsImage[key].map[p.hex]) {
-          matched = matchColor(p.hex);
+          matched = closerColor.match(p.hex);
           newP = matched.value;
           colorsImage[key].map[p.hex] = matched.name;
         } else {
