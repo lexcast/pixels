@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FileDropzone from "./FileDropzone";
 import PaletteGenerate from "./PaletteGenerate";
 import PaletteSelector from "./PaletteSelector";
+import AlgorithmSelector from "./AlgorithmSelector";
 import GlobalCounter from "./GlobalCounter";
 import ImagesGrid from "./ImagesGrid";
 import ImageDetail from "./ImageDetail";
@@ -15,12 +16,15 @@ const App = () => {
   const [palettes, setPalettes] = useState(defaultPalettes);
   const [selectedPalette, setSelectedPalette] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState(
+    algorithms.DELTA_E00
+  );
 
   const colorsImage = {};
   const colorsGlobal = {};
   let globalCount = 0;
   if (selectedPalette) {
-    closerColor.from(palettes[selectedPalette], algorithms.DELTA_E94);
+    closerColor.from(palettes[selectedPalette], selectedAlgorithm);
 
     Object.keys(images).forEach(key => {
       const img = images[key];
@@ -68,6 +72,7 @@ const App = () => {
         <PaletteGenerate {...{ images, setPalettes }} />
       </div>
       <PaletteSelector {...{ palettes, selectedPalette, setSelectedPalette }} />
+      <AlgorithmSelector {...{ selectedAlgorithm, setSelectedAlgorithm }} />
       {selectedPalette && sprites > 0 && (
         <GlobalCounter
           pixels={globalCount}
