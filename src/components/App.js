@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import FileDropzone from "./FileDropzone";
 import PaletteGenerate from "./PaletteGenerate";
 import PaletteSelector from "./PaletteSelector";
@@ -8,6 +8,7 @@ import ImagesGrid from "./ImagesGrid";
 import ImageDetail from "./ImageDetail";
 import defaultPalettes from "data/palettes";
 import closerColor, { algorithms } from "utils/closerColor";
+import imageColors from "selectors/imageColors";
 
 const PRICE = 0.01965;
 
@@ -20,48 +21,40 @@ const App = () => {
     algorithms.DELTA_E00
   );
 
-  const colorsImage = {};
-  const colorsGlobal = {};
-  let globalCount = 0;
-  if (selectedPalette) {
-    closerColor.from(palettes[selectedPalette], selectedAlgorithm);
+  const palette = palettes[selectedPalette];
 
-    Object.keys(images).forEach(key => {
-      const img = images[key];
-      colorsImage[key] = { total: 0, count: {}, map: {} };
+  const { colorsImage, colorsGlobal, globalCount } = useMemo(() => {
+    const colorsImage = {};
+    const colorsGlobal = {};
+    let globalCount = 0;
 
-      img.pixels.flat().forEach(p => {
-        if (!p) {
-          return;
-        }
+    if (palette) {
+      closerColor.from(palette, selectedAlgorithm);
 
-        let matched;
-        let newP;
-        if (!colorsImage[key].map[p.hex]) {
-          matched = closerColor.match(p.hex);
-          newP = matched.value;
-          colorsImage[key].map[p.hex] = matched.name;
-        } else {
-          newP = palettes[selectedPalette][colorsImage[key].map[p.hex]];
-        }
+      Object.keys(images).forEach(key => {
+        const img = images[key];
 
-        if (!colorsImage[key].count[newP]) {
-          colorsImage[key].count[newP] = { id: matched.name, count: 1 };
-        } else {
-          colorsImage[key].count[newP].count++;
-        }
+        const { colorImage, colorGlobal, count } = imageColors({
+          img,
+          closerColor,
+          palette,
+          selectedAlgorithm
+        });
 
-        if (!colorsGlobal[newP]) {
-          colorsGlobal[newP] = { id: matched.name, count: 1 };
-        } else {
-          colorsGlobal[newP].count++;
-        }
-
-        colorsImage[key].total++;
-        globalCount++;
+        colorsImage[key] = colorImage;
+        globalCount += count;
+        Object.keys(colorGlobal).forEach(p => {
+          if (!colorsGlobal[p]) {
+            colorsGlobal[p] = colorGlobal[p];
+          } else {
+            colorsGlobal[p].count += colorGlobal[p].count;
+          }
+        });
       });
-    });
-  }
+    }
+
+    return { colorsImage, colorsGlobal, globalCount };
+  }, [images, palette, selectedAlgorithm]);
 
   const sprites = Object.keys(images).length;
 
@@ -83,7 +76,7 @@ const App = () => {
       )}
       {Object.keys(images).length > 0 && (
         <ImagesGrid
-          palette={palettes[selectedPalette]}
+          palette={palette}
           {...{ images, selectedPalette, colorsImage, PRICE, setSelectedImage }}
         />
       )}
@@ -92,7 +85,7 @@ const App = () => {
           id={selectedImage}
           image={images[selectedImage]}
           colors={colorsImage[selectedImage]}
-          palette={palettes[selectedPalette]}
+          palette={palette}
           {...{ selectedPalette, setSelectedImage, PRICE }}
         />
       )}
