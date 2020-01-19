@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImagePixels from "./ImagePixels";
 import PaletteCounter from "./PaletteCounter";
 import { PIXEL_SIZE } from "utils";
@@ -13,6 +13,28 @@ const ImageDetail = ({
   moveSelectedImage,
   PRICE
 }) => {
+  useEffect(() => {
+    const handleKey = e => {
+      if (e.keyCode === 27) {
+        setSelectedImage(null);
+      }
+
+      if (e.keyCode === 37) {
+        moveSelectedImage(-1);
+      }
+
+      if (e.keyCode === 39) {
+        moveSelectedImage(1);
+      }
+    };
+
+    document.addEventListener("keydown", handleKey, false);
+
+    return () => {
+      document.removeEventListener("keydown", handleKey, false);
+    };
+  });
+
   return (
     <>
       <div
