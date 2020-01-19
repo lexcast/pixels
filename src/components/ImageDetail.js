@@ -37,7 +37,7 @@ const ImageDetail = ({
               width={image.width}
               height={image.height}
               size={PIXEL_SIZE}
-              titled
+              titled={selectedPalette ? true : false}
             />
           </div>
           {selectedPalette && (
