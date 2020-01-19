@@ -21,6 +21,19 @@ const App = () => {
     algorithms.DELTA_E00
   );
 
+  const moveSelectedImage = move => {
+    const imagesKeys = Object.keys(images);
+    const index = imagesKeys.indexOf(selectedImage);
+    const newIndex =
+      index + move < 0
+        ? imagesKeys.length - 1
+        : index + move > imagesKeys.length - 1
+        ? 0
+        : index + move;
+
+    setSelectedImage(imagesKeys[newIndex]);
+  };
+
   const palette = palettes[selectedPalette];
 
   const { colorsImage, colorsGlobal, globalCount } = useMemo(() => {
@@ -76,8 +89,14 @@ const App = () => {
       )}
       {Object.keys(images).length > 0 && (
         <ImagesGrid
-          palette={palette}
-          {...{ images, selectedPalette, colorsImage, PRICE, setSelectedImage }}
+          {...{
+            palette,
+            images,
+            selectedPalette,
+            colorsImage,
+            PRICE,
+            setSelectedImage
+          }}
         />
       )}
       {selectedImage && (
@@ -85,8 +104,13 @@ const App = () => {
           id={selectedImage}
           image={images[selectedImage]}
           colors={colorsImage[selectedImage]}
-          palette={palette}
-          {...{ selectedPalette, setSelectedImage, PRICE }}
+          {...{
+            palette,
+            selectedPalette,
+            setSelectedImage,
+            PRICE,
+            moveSelectedImage
+          }}
         />
       )}
     </div>
