@@ -4,8 +4,8 @@ import { loadImage, getPixels } from "utils";
 
 const FileDropzone = ({ setImages }) => {
   const onDrop = useCallback(
-    acceptedFiles => {
-      acceptedFiles.forEach(file => {
+    (acceptedFiles) => {
+      acceptedFiles.forEach((file) => {
         const reader = new FileReader();
 
         reader.onabort = () => console.log("file reading was aborted");
@@ -20,10 +20,10 @@ const FileDropzone = ({ setImages }) => {
             height: img.height,
             image: img,
             url,
-            pixels: getPixels(img)
+            pixels: getPixels(img),
           };
 
-          setImages(oldImages => {
+          setImages((oldImages) => {
             return { ...oldImages, [file.name]: newImage };
           });
         };
@@ -36,8 +36,11 @@ const FileDropzone = ({ setImages }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className="flex items-center justify-center p-6 w-1/2 mx-2 cursor-pointer text-center hover:bg-gray-800 rounded-lg border-2 border-dashed border-gray-500">
-      <input {...getInputProps()} />
+    <div
+      {...getRootProps()}
+      className="flex items-center justify-center p-6 w-1/2 mx-2 cursor-pointer text-center hover:bg-gray-800 rounded-lg border-2 border-dashed border-gray-500"
+    >
+      <input {...getInputProps()} accept="image/*" />
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (

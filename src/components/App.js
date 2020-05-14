@@ -6,13 +6,21 @@ import AlgorithmSelector from "./AlgorithmSelector";
 import GlobalCounter from "./GlobalCounter";
 import ImagesGrid from "./ImagesGrid";
 import ImageDetail from "./ImageDetail";
+import Cost from "./Cost";
 import defaultPalettes from "data/palettes";
 import closerColor, { algorithms } from "utils/closerColor";
 import imageColors from "selectors/imageColors";
 
-const PRICE = 0.01965;
+const DEFAULT_COST = 0.001;
+const DEFAULT_CURRENCY = "USD";
 
 const App = () => {
+  const [cost, setCost] = useState(
+    localStorage.getItem("cost") || DEFAULT_COST
+  );
+  const [currency, setCurrency] = useState(
+    localStorage.getItem("currency") || DEFAULT_CURRENCY
+  );
   const [images, setImages] = useState({});
   const [palettes, setPalettes] = useState(defaultPalettes);
   const [selectedPalette, setSelectedPalette] = useState(null);
@@ -21,7 +29,7 @@ const App = () => {
     algorithms.DELTA_E00
   );
 
-  const moveSelectedImage = move => {
+  const moveSelectedImage = (move) => {
     const imagesKeys = Object.keys(images);
     const index = imagesKeys.indexOf(selectedImage);
     const newIndex =
@@ -44,19 +52,19 @@ const App = () => {
     if (palette) {
       closerColor.from(palette, selectedAlgorithm);
 
-      Object.keys(images).forEach(key => {
+      Object.keys(images).forEach((key) => {
         const img = images[key];
 
         const { colorImage, colorGlobal, count } = imageColors({
           img,
           closerColor,
           palette,
-          selectedAlgorithm
+          selectedAlgorithm,
         });
 
         colorsImage[key] = colorImage;
         globalCount += count;
-        Object.keys(colorGlobal).forEach(p => {
+        Object.keys(colorGlobal).forEach((p) => {
           if (!colorsGlobal[p]) {
             colorsGlobal[p] = colorGlobal[p];
           } else {
@@ -76,6 +84,7 @@ const App = () => {
       <div className="flex p-3 text-gray-500 uppercase text-base">
         <FileDropzone {...{ setImages }} />
         <PaletteGenerate {...{ images, setPalettes }} />
+        <Cost {...{ cost, currency, setCost, setCurrency }} />
       </div>
       <PaletteSelector {...{ palettes, selectedPalette, setSelectedPalette }} />
       <AlgorithmSelector {...{ selectedAlgorithm, setSelectedAlgorithm }} />
@@ -83,7 +92,7 @@ const App = () => {
         <GlobalCounter
           pixels={globalCount}
           sprites={sprites}
-          cost={(globalCount * PRICE).toFixed(2)}
+          cost={(globalCount * cost).toFixed(2)}
           colorsGlobal={colorsGlobal}
         />
       )}
@@ -94,8 +103,9 @@ const App = () => {
             images,
             selectedPalette,
             colorsImage,
-            PRICE,
-            setSelectedImage
+            cost,
+            currency,
+            setSelectedImage,
           }}
         />
       )}
@@ -108,8 +118,8 @@ const App = () => {
             palette,
             selectedPalette,
             setSelectedImage,
-            PRICE,
-            moveSelectedImage
+            cost,
+            moveSelectedImage,
           }}
         />
       )}

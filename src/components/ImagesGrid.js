@@ -8,8 +8,9 @@ const ImagesGrid = ({
   palette,
   selectedPalette,
   colorsImage,
-  PRICE,
-  setSelectedImage
+  cost,
+  currency,
+  setSelectedImage,
 }) => {
   const list = Object.keys(images);
 
@@ -31,7 +32,7 @@ const ImagesGrid = ({
             style={{
               imageRendering: "pixelated",
               width: image.width + "px",
-              height: image.height + "px"
+              height: image.height + "px",
             }}
           />
         </div>
@@ -51,7 +52,7 @@ const ImagesGrid = ({
               {colorsImage[id].total}
             </div>
             <div className="w-20 flex items-center justify-end text-sm">
-              ${(colorsImage[id].total * PRICE).toFixed(2)}
+              ${(colorsImage[id].total * cost).toFixed(2)}
             </div>
             <div className="flex-1 flex flex-wrap items-center justify-center px-2">
               <PalettePixels palette={colorsImage[id].count} useKey />
@@ -69,7 +70,7 @@ const ImagesGrid = ({
         <div className="w-20 flex items-center justify-center">Result</div>
         <div className="w-20 flex items-center justify-end">Pixels</div>
         <div className="w-20 flex items-center justify-end">
-          Cost <sub>(MXN)</sub>
+          Cost <sub>({currency})</sub>
         </div>
         <div className="flex-1 flex flex-wrap items-center justify-center">
           Palette

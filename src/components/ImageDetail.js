@@ -11,10 +11,10 @@ const ImageDetail = ({
   selectedPalette,
   setSelectedImage,
   moveSelectedImage,
-  PRICE
+  cost,
 }) => {
   useEffect(() => {
-    const handleKey = e => {
+    const handleKey = (e) => {
       if (e.keyCode === 27) {
         setSelectedImage(null);
       }
@@ -56,7 +56,7 @@ const ImageDetail = ({
               style={{
                 imageRendering: "pixelated",
                 width: image.width * PIXEL_SIZE + "px",
-                height: image.height * PIXEL_SIZE + "px"
+                height: image.height * PIXEL_SIZE + "px",
               }}
             />
             <ImagePixels
@@ -77,7 +77,7 @@ const ImageDetail = ({
                     Pixels: <b>{colors.total}</b>
                   </span>
                   <span>
-                    Cost: <b>${(colors.total * PRICE).toFixed(2)}</b>
+                    Cost: <b>${(colors.total * cost).toFixed(2)}</b>
                   </span>
                 </div>
               </div>
