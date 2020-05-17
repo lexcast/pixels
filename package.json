@@ -1,10 +1,12 @@
 {
-  "name": "cra-tailwindcss",
+  "name": "pixels",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://lexcast.github.io/pixels/",
   "dependencies": {
     "autoprefixer": "^9.8.0",
     "delta-e": "^0.0.7",
+    "gh-pages": "^2.2.0",
     "lodash.memoize": "^4.1.2",
     "nearest-color": "^0.4.4",
     "react": "^16.13.1",
@@ -21,7 +23,9 @@
     "build": "react-scripts build",
     "build:tw": "./node_modules/.bin/postcss ./src/styles/tailwind.css -o ./src/styles/index.css --env production",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build:tw && yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
