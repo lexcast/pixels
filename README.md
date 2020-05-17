@@ -1,6 +1,8 @@
-# CRA-Tailwindcss
+# Pixels
 
-This is a base project to add [Tailwindcss](https://tailwindcss.com/) to a [Create React App](https://github.com/facebook/create-react-app).
+See in action [here](https://lexcast.github.io/pixels/).
+
+Upload a pixel art image and count pixels, best color match based on a palette, generate a palette based on the images, calculate cost per pixel (for hama beads).
 
 ## Install
 
@@ -8,7 +10,7 @@ Just clone it or download the repository, and run `yarn install`.
 
 ## Available Scripts
 
-This project is basically a Create React App, and it has all of its scripts, plus two to run tailwindcss:
+This project is a Create React App, and it has all of its scripts, plus two to run tailwindcss (generates the styles):
 
 ### `yarn start:tw`
 
