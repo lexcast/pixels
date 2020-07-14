@@ -1,4 +1,5 @@
 # Pixels
+![CI DEPLOY](https://github.com/lexcast/pixels/workflows/CI%20DEPLOY/badge.svg)
 
 See in action [here](https://lexcast.github.io/pixels/).
 
